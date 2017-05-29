@@ -2,6 +2,7 @@ package com.github.mahui53541.accounting.controller;
 
 import com.github.mahui53541.accounting.model.Resource;
 import com.github.mahui53541.accounting.service.ResourceService;
+import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ public class ResourceController {
     public Map<String,Object> example(@RequestParam(required=false) String parentResourceSn) throws Exception{
         Example example=new Example(Resource.class);
         Example.Criteria criteria=example.createCriteria();
+        PageHelper.startPage(2,3);
         if(parentResourceSn!=null&&parentResourceSn.trim().length()>0){
             criteria.andEqualTo("parentResourceSn",parentResourceSn);
         }else{
