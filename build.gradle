@@ -3,52 +3,129 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
 
 sourceCompatibility = 1.8
+
+//统一编码为utf-8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
 }
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'org.springframework:spring-context:4.3.5.RELEASE',
-    'org.springframework:spring-context-support:4.3.5.RELEASE',
-    'org.springframework:spring-beans:4.3.5.RELEASE',
-    'org.springframework:spring-expression:4.3.5.RELEASE',
-    'org.springframework:spring-orm:4.3.5.RELEASE',
-    'org.springframework:spring-web:4.3.5.RELEASE',
-    'org.springframework:spring-jdbc:4.3.5.RELEASE',
-    'org.springframework:spring-test:4.3.5.RELEASE',
-    'org.springframework:spring-aop:4.3.5.RELEASE',
-    'org.springframework:spring-webmvc:4.3.5.RELEASE',
-    'org.springframework:spring-tx:4.3.5.RELEASE',
-    'org.mybatis:mybatis:3.4.1',
-    'org.mybatis:mybatis-spring:1.3.1',
-    'org.xerial:sqlite-jdbc:3.16.1',
-    'com.mchange:c3p0:0.9.5.2',
-    'com.mchange:mchange-commons-java:0.2.11',
-    'com.alibaba:fastjson:1.2.31',
-    'commons-io:commons-io:2.5',
-    'commons-codec:commons-codec:1.10',
-    'org.apache.commons:commons-lang3:3.5',
-    'commons-logging:commons-logging:1.2',
-    'commons-fileupload:commons-fileupload:1.3.2'
+configurations {
+    mybatisGenerator
 }
-group 'com.github.mahui53541.accounting'
-version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
-apply plugin: 'war'
+sourceSets {
+    main {
+        resources {
+            srcDir("src/main/resources")
+        }
+    }
+}
 
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
+def getDbProperties = {
+    def properties = new Properties()
+    def dbPropertiesPath = sourceSets.main.resources.srcDirs[0].path;
+    file("$dbPropertiesPath/mysql-db.properties").withInputStream { inputStream ->
+        properties.load(inputStream)
+    }
+    properties;
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile 'org.slf4j:slf4j-log4j12:1.7.25',
+            'org.springframework:spring-context:4.3.5.RELEASE',
+            'org.springframework:spring-context-support:4.3.5.RELEASE',
+            'org.springframework:spring-beans:4.3.5.RELEASE',
+            'org.springframework:spring-expression:4.3.5.RELEASE',
+            'org.springframework:spring-orm:4.3.5.RELEASE',
+            'org.springframework:spring-web:4.3.5.RELEASE',
+            'org.springframework:spring-jdbc:4.3.5.RELEASE',
+            'org.springframework:spring-test:4.3.5.RELEASE',
+            'org.springframework:spring-aop:4.3.5.RELEASE',
+            'org.springframework:spring-webmvc:4.3.5.RELEASE',
+            'org.springframework:spring-tx:4.3.5.RELEASE',
+            'org.mybatis:mybatis:3.4.1',
+            'org.mybatis:mybatis-spring:1.3.1',
+            'tk.mybatis:mapper:3.4.0',
+            'com.github.pagehelper:pagehelper:5.0.1',
+            'mysql:mysql-connector-java:5.1.41',
+            'com.mchange:c3p0:0.9.5.2',
+            'com.mchange:mchange-commons-java:0.2.11',
+            'com.alibaba:fastjson:1.2.31',
+            'commons-io:commons-io:2.5',
+            'commons-codec:commons-codec:1.10',
+            'org.apache.commons:commons-lang3:3.5',
+            'commons-logging:commons-logging:1.2',
+            'commons-fileupload:commons-fileupload:1.3.2'
+
+    mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.3.5'
+    mybatisGenerator 'mysql:mysql-connector-java:5.1.41'
+    mybatisGenerator 'tk.mybatis:mapper:3.4.0'
+
+}
+
+//配置插件仓库
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:1.2.4'
+    }
+}
+gretty {
+    port = 8090
+    contextPath =""
+    servletContainer = 'tomcat8'
+    debugPort = 5005      // default
+    debugSuspend = true   // default
+    httpsEnabled = true
+    httpsPort = 443
+    httpEnabled = true
+}
+
+task mybatisGenerate  {
+    doLast {
+        def prop = getDbProperties()
+
+        ant.properties['targetProject'] = projectDir.path
+        ant.properties['driverClass'] = prop.getProperty('dataSource.driverClass')
+        ant.properties['connectionURL'] = prop.getProperty('dataSource.jdbcUrl')
+        ant.properties['userId'] = prop.getProperty('dataSource.user')
+        ant.properties['password'] = prop.getProperty('dataSource.password')
+        ant.properties['src_main_java'] = sourceSets.main.java.srcDirs[0].path
+        ant.properties['src_main_resources'] = sourceSets.main.resources.srcDirs[0].path
+        ant.properties['modelPackage'] = this.modelPackage
+        ant.properties['mapperPackage'] = this.mapperPackage
+        ant.properties['sqlMapperPackage'] = this.sqlMapperPackage
+
+        ant.taskdef(
+                name: 'mbgenerator',
+                classname: 'org.mybatis.generator.ant.GeneratorAntTask',
+                classpath: configurations.mybatisGenerator.asPath
+        )
+        ant.mbgenerator(overwrite: true,
+                configfile: 'db/generatorConfig.xml', verbose: true) {
+            propertyset {
+                propertyref(name: 'targetProject')
+                propertyref(name: 'userId')
+                propertyref(name: 'driverClass')
+                propertyref(name: 'connectionURL')
+                propertyref(name: 'password')
+                propertyref(name: 'src_main_java')
+                propertyref(name: 'src_main_resources')
+                propertyref(name: 'modelPackage')
+                propertyref(name: 'mapperPackage')
+                propertyref(name: 'sqlMapperPackage')
+
+            }
+        }
+    }
 }

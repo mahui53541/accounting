@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.mahui53541.accounting.mapper.ResourceMapper">
+  <resultMap id="BaseResultMap" type="com.github.mahui53541.accounting.model.Resource">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="resource_sn" jdbcType="VARCHAR" property="resourceSn" />
+    <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
+    <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
+    <result column="parent_resource_sn" jdbcType="VARCHAR" property="parentResourceSn" />
+    <result column="show_sequence" jdbcType="TINYINT" property="showSequence" />
+    <result column="has_menu_child" jdbcType="BIT" property="hasMenuChild" />
+  </resultMap>
+</mapper>
