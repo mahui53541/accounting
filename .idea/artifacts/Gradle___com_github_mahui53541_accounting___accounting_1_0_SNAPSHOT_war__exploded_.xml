@@ -47,6 +47,7 @@
           <element id="library" level="project" name="Gradle: org.springframework:spring-core:4.3.5.RELEASE" />
           <element id="library" level="project" name="Gradle: javax.persistence:persistence-api:1.0" />
           <element id="library" level="project" name="Gradle: com.github.jsqlparser:jsqlparser:0.9.5" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/jstl/1.2/74aca283cd4f4b4f3e425f5820cda58f44409547/jstl-1.2.jar" />
         </element>
       </element>
     </root>

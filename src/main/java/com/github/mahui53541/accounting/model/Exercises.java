@@ -1,5 +1,8 @@
 package com.github.mahui53541.accounting.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "exercises")
@@ -18,7 +21,11 @@ public class Exercises {
      * 习题类型：0：练习题 ；1：自测题；2：试卷
      */
     @Column(name = "exercises_type")
-    private Boolean exercisesType;
+    private String exercisesType;
+
+    @Column(name = "upload_time")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    private Date uploadTime;
 
     /**
      * @return id
@@ -67,7 +74,7 @@ public class Exercises {
      *
      * @return exercises_type - 习题类型：0：练习题 ；1：自测题；2：试卷
      */
-    public Boolean getExercisesType() {
+    public String getExercisesType() {
         return exercisesType;
     }
 
@@ -76,7 +83,21 @@ public class Exercises {
      *
      * @param exercisesType 习题类型：0：练习题 ；1：自测题；2：试卷
      */
-    public void setExercisesType(Boolean exercisesType) {
+    public void setExercisesType(String exercisesType) {
         this.exercisesType = exercisesType;
+    }
+
+    /**
+     * @return upload_time
+     */
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    /**
+     * @param uploadTime
+     */
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
     }
 }

@@ -8,6 +8,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="exercises_name" jdbcType="VARCHAR" property="exercisesName" />
     <result column="exercises_url" jdbcType="VARCHAR" property="exercisesUrl" />
-    <result column="exercises_type" jdbcType="BIT" property="exercisesType" />
+    <result column="exercises_type" jdbcType="VARCHAR" property="exercisesType" />
+    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
   </resultMap>
 </mapper>
