@@ -8,10 +8,7 @@ import com.github.pagehelper.PageRowBounds;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import tk.mybatis.mapper.entity.Example;
 
@@ -46,11 +43,11 @@ public class ResourceController {
         return map;
     }
 
-    @RequestMapping(value="/getDetail")
-    public ModelAndView getDetail(ModelAndView mv, @RequestParam String parentResourceSn){
+    @RequestMapping(value="/{resourceSn}")
+    public ModelAndView getDetail(ModelAndView mv, @PathVariable String resourceSn){
         Example example=new Example(Resource.class);
         Example.Criteria criteria=example.createCriteria();
-        criteria.andEqualTo("resourceSn",parentResourceSn);
+        criteria.andEqualTo("resourceSn",resourceSn);
         List<Resource> resource=resourceService.selectByExample(example);
         if(resource!=null && resource.size()>0){
             mv.addObject("status","success");
@@ -59,25 +56,31 @@ public class ResourceController {
             mv.addObject("status","error");
         }
 
+        //查询所有一级菜单
+        Example menuExample=new Example(Resource.class);
+        Example.Criteria menuCriteria=menuExample.createCriteria();
+        menuCriteria.andIsNull("parentResourceSn");
+        List<Resource> menu=resourceService.selectByExample(menuExample);
+        mv.addObject("menu",menu);
         mv.setViewName("detail");
         return mv;
     }
-    @RequestMapping(value = "/example", method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String,Object> example(@RequestParam(required=false) String parentResourceSn) throws Exception{
-        Example example=new Example(Resource.class);
-        Example.Criteria criteria=example.createCriteria();
-        //PageHelper.startPage(2,3);
-        if(parentResourceSn!=null&&parentResourceSn.trim().length()>0){
-            criteria.andEqualTo("parentResourceSn",parentResourceSn);
-        }else{
-            criteria.andIsNull("parentResourceSn");
-        }
-        PageRowBounds p=new PageRowBounds(2,3);
-        List<Resource> resource=resourceService.selectByExampleAndRowBounds(example,p);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("user",resource);
-        map.put("total",p.getTotal());
-        return map;
-    }
+//    @RequestMapping(value = "/example", method = RequestMethod.GET)
+//    @ResponseBody
+//    public Map<String,Object> example(@RequestParam(required=false) String parentResourceSn) throws Exception{
+//        Example example=new Example(Resource.class);
+//        Example.Criteria criteria=example.createCriteria();
+//        //PageHelper.startPage(2,3);
+//        if(parentResourceSn!=null&&parentResourceSn.trim().length()>0){
+//            criteria.andEqualTo("parentResourceSn",parentResourceSn);
+//        }else{
+//            criteria.andIsNull("parentResourceSn");
+//        }
+//        PageRowBounds p=new PageRowBounds(2,3);
+//        List<Resource> resource=resourceService.selectByExampleAndRowBounds(example,p);
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("user",resource);
+//        map.put("total",p.getTotal());
+//        return map;
+//    }
 }

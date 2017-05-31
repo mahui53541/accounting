@@ -53,12 +53,32 @@ public class ExercisesController {
     @RequestMapping("/download")
     public ResponseEntity<byte[]> download(HttpServletRequest request, @RequestParam("filename") String filename,
                                            @RequestParam("newName") String newName){
-        String path=request.getServletContext().getRealPath("/files/exercises/");
-        File file=new File(path+filename);
+//        String path=request.getServletContext().getRealPath("/files/exercises/");
+//        File file=new File(path+filename);
+//        HttpHeaders headers=new HttpHeaders();
+//
+//        //显示下载的文件名
+//        String downloadFileName= newName+"."+FilenameUtils.getExtension(filename);
+//        try {
+//            downloadFileName=new String(downloadFileName.getBytes("UTF-8"),"iso-8859-1");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        headers.setContentDispositionFormData("attachment",downloadFileName);
+//        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//        try {
+//            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
+//        } catch (IOException e) {
+//            return null;
+//        }
+
+        //暂时不对外提供下载链接
+        String path=request.getServletContext().getRealPath("/files/noaccess/");
+        File file=new File(path+"noaccess.docx");
         HttpHeaders headers=new HttpHeaders();
 
         //显示下载的文件名
-        String downloadFileName= newName+"."+FilenameUtils.getExtension(filename);
+        String downloadFileName= "无权下载.docx";
         try {
             downloadFileName=new String(downloadFileName.getBytes("UTF-8"),"iso-8859-1");
         } catch (UnsupportedEncodingException e) {

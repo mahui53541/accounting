@@ -24,7 +24,7 @@
                     var array=data.data;
                     for(var i=0;i<array.length;i++){
                         var resource=array[i];
-                        var html="<a href='${pageContext.request.contextPath}/resource/getDetail?parentResourceSn="+resource.resourceSn+"' class='list-group-item list-group-item-info'>"+resource.resourceName+"</a>";
+                        var html="<a href='${pageContext.request.contextPath}/resource/"+resource.resourceSn+"' class='list-group-item list-group-item-info'>"+resource.resourceName+"</a>";
                         $("#menu").append(html);
                     }
                 }
