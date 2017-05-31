@@ -34,7 +34,7 @@ public class PageController {
         File file=null;
         String downloadFileName=null;
         HttpHeaders headers=new HttpHeaders();
-        if(filename.startsWith("lessonplan")){
+        //if(filename.startsWith("lessonplan")){
             //暂时不对外提供下载链接
             path=request.getServletContext().getRealPath("/files/noaccess/");
 
@@ -60,25 +60,25 @@ public class PageController {
             } catch (IOException e) {
                 return null;
             }
-        }else{
-            path=request.getServletContext().getRealPath("/files/");
-            file=new File(path+filename);
-
-            //显示下载的文件名
-            try {
-                downloadFileName=new String(filename.getBytes("UTF-8"),"iso-8859-1");
-            } catch (UnsupportedEncodingException e) {
-                downloadFileName=filename;
-                e.printStackTrace();
-            }
-            headers.setContentDispositionFormData("attachment",downloadFileName);
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            try {
-                return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
-            } catch (IOException e) {
-                return null;
-            }
-        }
+//        }else{
+//            path=request.getServletContext().getRealPath("/files/");
+//            file=new File(path+filename);
+//
+//            //显示下载的文件名
+//            try {
+//                downloadFileName=new String(filename.getBytes("UTF-8"),"iso-8859-1");
+//            } catch (UnsupportedEncodingException e) {
+//                downloadFileName=filename;
+//                e.printStackTrace();
+//            }
+//            headers.setContentDispositionFormData("attachment",downloadFileName);
+//            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//            try {
+//                return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
+//            } catch (IOException e) {
+//                return null;
+//            }
+//        }
 
 
     }

@@ -26,13 +26,13 @@
         </embed>
     </object>
 </div>
-<div style="margin-top: 20px ;margin-left:30px;">
-    <a type="button" class="btn btn-link" aria-label="Left Align" href="${pageContext.request.contextPath}/download?filename=syllabus.docx">
-        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载(教学大纲Word版)
-    </a>
-    <a type="button" class="btn btn-link" aria-label="Left Align" href="${pageContext.request.contextPath}/download?filename=syllabus.pdf">
-        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载(教学大纲PDF版)
-    </a>
-</div>
+<%--<div style="margin-top: 20px ;margin-left:30px;">--%>
+    <%--<a type="button" class="btn btn-link" aria-label="Left Align" href="${pageContext.request.contextPath}/download?filename=syllabus.docx">--%>
+        <%--<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载(教学大纲Word版)--%>
+    <%--</a>--%>
+    <%--<a type="button" class="btn btn-link" aria-label="Left Align" href="${pageContext.request.contextPath}/download?filename=syllabus.pdf">--%>
+        <%--<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载(教学大纲PDF版)--%>
+    <%--</a>--%>
+<%--</div>--%>
 </body>
 </html>

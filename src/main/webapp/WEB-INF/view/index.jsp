@@ -38,7 +38,7 @@
 
     </script>
   </head>
-  <body style="padding:0 8%">
+  <body style="padding:0 8%;background-color: #CCCCCC">
   <div class="container-fluid" style="background:#193368;text-align:left;">
       <img src="${pageContext.request.contextPath}/images/base/cumt-logo.png">
       <img src="${pageContext.request.contextPath}/images/base/info.png">

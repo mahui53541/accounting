@@ -26,10 +26,10 @@
         </embed>
     </object>
 </div>
-<div style="margin-top: 20px;margin-left:30px;">
-    <a type="button" class="btn btn-link" aria-label="Left Align" href="${pageContext.request.contextPath}/download?filename=application.pdf">
-        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载(申报表格PDF)
-    </a>
-</div>
+<%--<div style="margin-top: 20px;margin-left:30px;">--%>
+    <%--<a type="button" class="btn btn-link" aria-label="Left Align" href="${pageContext.request.contextPath}/download?filename=application.pdf">--%>
+        <%--<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载(申报表格PDF)--%>
+    <%--</a>--%>
+<%--</div>--%>
 </body>
 </html>
