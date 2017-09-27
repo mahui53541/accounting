@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50717
-Source Host           : localhost:3306
+Source Server         : ali
+Source Server Version : 50716
+Source Host           : 112.74.43.139:3306
 Source Database       : accounting
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2017-05-30 22:42:41
+Date: 2017-09-27 10:41:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -60,7 +60,8 @@ INSERT INTO `resource` VALUES ('3', 'kcjj', 'courseinfo/courseinfo.jsp', '课程
 INSERT INTO `resource` VALUES ('4', 'jxdg', 'syllabus/syllabus.jsp', '教学大纲', null, '4', '\0');
 INSERT INTO `resource` VALUES ('5', 'ja', 'lessonplan/lessonplan.jsp', '教案', null, '5', '\0');
 INSERT INTO `resource` VALUES ('6', 'xiyst', 'exercises/exercises.jsp', '习题与试题', null, '6', '');
-INSERT INTO `resource` VALUES ('7', 'jxxgpj', 'questionnaire/questionnaire.jsp', '教学效果评价', null, '7', '\0');
+INSERT INTO `resource` VALUES ('7', 'jxyx', 'video/video.jsp', '教学影像', null, '7', '\0');
+INSERT INTO `resource` VALUES ('8', 'jxxgpj', 'questionnaire/questionnaire.jsp', '教学效果评价', null, '8', '\0');
 INSERT INTO `resource` VALUES ('10', 'lxt', null, '练习题', 'xiyst', '1', '\0');
 INSERT INTO `resource` VALUES ('11', 'zct', null, '自测题', 'xiyst', '2', '\0');
 INSERT INTO `resource` VALUES ('12', 'sj', null, '试卷', 'xiyst', '3', '\0');
